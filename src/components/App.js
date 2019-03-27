@@ -22,20 +22,23 @@ class App extends Component {
 
   render() { 
     const recipes = this.state.recipes.results;
+    let searchString = this.state.searchString;
     return (
       <div className="App">
         <Navbar onChange={this.onChangeSearch}/>
         <div className="container mt-10">
           <div className="row">
           {recipes.map( (item) => {
-            return(
-            <RecipeItem 
-              title={item.title}
-              ingredients={item.ingredients}
-              href={item.href}
-              thumbnail={item.thumbnail}
-            />
-            );
+            if(searchString.length == 0 || item.title.includes(searchString) || item.ingredients.includes(searchString)){
+              return(
+              <RecipeItem 
+                title={item.title}
+                ingredients={item.ingredients}
+                href={item.href}
+                thumbnail={item.thumbnail}
+              />
+              );
+            }
           })}
           </div>
         </div>
