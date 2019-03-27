@@ -12,13 +12,19 @@ class App extends Component {
       searchString: '',
       recipes,
     };
+    this.onChangeSearch = this.onChangeSearch.bind(this);
+  }
+
+  onChangeSearch(event){
+    this.setState({searchString: event});
+    console.log(event);
   }
 
   render() { 
     const recipes = this.state.recipes.results;
     return (
       <div className="App">
-        <Navbar />
+        <Navbar onChange={this.onChangeSearch}/>
         <div className="container mt-10">
           <div className="row">
           {recipes.map( (item) => {
