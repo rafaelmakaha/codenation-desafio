@@ -17,7 +17,6 @@ class App extends Component {
 
   onChangeSearch(event){
     this.setState({searchString: event});
-    console.log(event);
   }
 
   render() { 
@@ -29,7 +28,7 @@ class App extends Component {
         <div className="container mt-10">
           <div className="row">
           {recipes.map( (item) => {
-            if(searchString.length == 0 || item.title.includes(searchString) || item.ingredients.includes(searchString)){
+            if(searchString.length === 0 || item.title.includes(searchString) || item.ingredients.includes(searchString)){
               return(
               <RecipeItem 
                 title={item.title}
@@ -38,6 +37,8 @@ class App extends Component {
                 thumbnail={item.thumbnail}
               />
               );
+            }else{
+              return null;
             }
           })}
           </div>
