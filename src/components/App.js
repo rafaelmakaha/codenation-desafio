@@ -9,20 +9,28 @@ class App extends Component {
 
     this.recipes = recipes.results;
     this.state = {
-      searchString: ''
+      searchString: '',
+      recipes,
     };
   }
 
   render() { 
+    const recipes = this.state.recipes.results;
     return (
       <div className="App">
         <Navbar />
         <div className="container mt-10">
           <div className="row">
-            <RecipeItem />
-            <RecipeItem />
-            <RecipeItem />
-            <RecipeItem />
+          {recipes.map( (item) => {
+            return(
+            <RecipeItem 
+              title={item.title}
+              ingredients={item.ingredients}
+              href={item.href}
+              thumbnail={item.thumbnail}
+            />
+            );
+          })}
           </div>
         </div>
       </div>
