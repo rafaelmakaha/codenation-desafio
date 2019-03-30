@@ -27,7 +27,7 @@ class App extends Component {
         <Navbar onChange={this.onChangeSearch}/>
         <div className="container mt-10">
           <div className="row">
-          {recipes.map((item,partsTitle,partsIngredients) => {
+          {recipes.map((item,key) => {
             if(!searchString.length){
               return(
                 <RecipeItem 
@@ -39,7 +39,7 @@ class App extends Component {
                 );
             }else if(item.title.includes(searchString) || item.ingredients.includes(searchString)){
 
-              partsTitle = item.title;
+              let partsTitle = item.title;
               partsTitle = partsTitle.replace(new RegExp(searchString,'g'), '!' + searchString + '!');
               partsTitle = partsTitle.split('!');
 
@@ -49,7 +49,7 @@ class App extends Component {
                 }
               }
 
-              partsIngredients = item.ingredients;
+              let partsIngredients = item.ingredients;
               partsIngredients = partsIngredients.replace(new RegExp(searchString,'g'), '!' + searchString + '!');
               partsIngredients = partsIngredients.split('!');
 
@@ -59,15 +59,16 @@ class App extends Component {
                 }
               }
 
-
               return(
-              <RecipeItem 
-                title={partsTitle}
-                ingredients={partsIngredients}
-                href={item.href}
-                thumbnail={item.thumbnail}
-              />
+                <RecipeItem 
+                  title={partsTitle}
+                  ingredients={partsIngredients}
+                  href={item.href}
+                  thumbnail={item.thumbnail}
+                />
               );
+            }else if(!item.title.includes(searchString) && !item.ingredients.includes(searchString) && recipes.length === key + 1){
+              return <h1>No Results to show</h1>;
             }else{
               return null;
             }
