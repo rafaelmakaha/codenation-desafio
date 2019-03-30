@@ -22,6 +22,7 @@ class App extends Component {
   render() { 
     const recipes = this.state.recipes.results;
     let searchString = this.state.searchString;
+    let cont =0;
     return (
       <div className="App">
         <Navbar onChange={this.onChangeSearch}/>
@@ -48,7 +49,6 @@ class App extends Component {
               partsIngredients = partsIngredients.split(reg);
               
               for(var i=0; i < partsTitle.length; i+=1){
-                console.log(partsTitle);
                 if(partsTitle[i].match(reg)){
                   partsTitle[i] = <mark>{partsTitle[i]}</mark>
                 }
@@ -59,7 +59,6 @@ class App extends Component {
                   partsIngredients[i] = <mark>{partsIngredients[i]}</mark>
                 }
               }
-
               return(
                 <RecipeItem 
                   title={partsTitle}
@@ -68,12 +67,15 @@ class App extends Component {
                   thumbnail={item.thumbnail}
                 />
               );
-            }else if(!item.title.match(new RegExp('(' + searchString + '+)', 'gi')) && !item.ingredients.match(new RegExp('(' + searchString + '+)', 'gi')) && recipes.length === key + 1){
-              return <h1>No Results to show</h1>;
             }else{
-              return null;
+              console.log(cont);
+              cont++;
             }
-          })}
+            if(cont === 20){
+              return <h1>No Results to show</h1>;
+            }
+          })
+          }
           </div>
         </div>
       </div>
