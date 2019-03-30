@@ -28,7 +28,6 @@ class App extends Component {
         <div className="container mt-10">
           <div className="row">
           {recipes.map((item,key) => {
-            // let reg = new RegExp('/('+searchString+'+)/gi');
             if(!searchString.length){
               return(
                 <RecipeItem 
@@ -38,7 +37,7 @@ class App extends Component {
                   thumbnail={item.thumbnail}
                 />
                 );
-            }else if(item.title.includes(searchString) || item.ingredients.includes(searchString)){
+            }else if(item.title.match(new RegExp('(' + searchString + '+)', 'gi')) || item.ingredients.match(new RegExp('(' + searchString + '+)', 'gi'))){
 
               let partsTitle = item.title;
               let partsIngredients = item.ingredients;
@@ -69,7 +68,7 @@ class App extends Component {
                   thumbnail={item.thumbnail}
                 />
               );
-            }else if(!item.title.includes(searchString) && !item.ingredients.includes(searchString) && recipes.length === key + 1){
+            }else if(!item.title.match(new RegExp('(' + searchString + '+)', 'gi')) && !item.ingredients.match(new RegExp('(' + searchString + '+)', 'gi')) && recipes.length === key + 1){
               return <h1>No Results to show</h1>;
             }else{
               return null;
