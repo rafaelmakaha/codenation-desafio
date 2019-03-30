@@ -27,12 +27,43 @@ class App extends Component {
         <Navbar onChange={this.onChangeSearch}/>
         <div className="container mt-10">
           <div className="row">
-          {recipes.map( (item) => {
-            if(searchString.length === 0 || item.title.includes(searchString) || item.ingredients.includes(searchString)){
+          {recipes.map((item,partsTitle,partsIngredients) => {
+            if(!searchString.length){
+              return(
+                <RecipeItem 
+                  title={item.title}
+                  ingredients={item.ingredients}
+                  href={item.href}
+                  thumbnail={item.thumbnail}
+                />
+                );
+            }else if(item.title.includes(searchString) || item.ingredients.includes(searchString)){
+
+              partsTitle = item.title;
+              partsTitle = partsTitle.replace(new RegExp(searchString,'g'), '!' + searchString + '!');
+              partsTitle = partsTitle.split('!');
+
+              for(var i=0; i < partsTitle.length; i+=1){
+                if(partsTitle[i].includes(searchString)){
+                  partsTitle[i] = <mark>{partsTitle[i]}</mark>
+                }
+              }
+
+              partsIngredients = item.ingredients;
+              partsIngredients = partsIngredients.replace(new RegExp(searchString,'g'), '!' + searchString + '!');
+              partsIngredients = partsIngredients.split('!');
+
+              for(i=0; i < partsIngredients.length; i+=1){
+                if(partsIngredients[i].includes(searchString)){
+                  partsIngredients[i] = <mark>{partsIngredients[i]}</mark>
+                }
+              }
+
+
               return(
               <RecipeItem 
-                title={item.title}
-                ingredients={item.ingredients}
+                title={partsTitle}
+                ingredients={partsIngredients}
                 href={item.href}
                 thumbnail={item.thumbnail}
               />
