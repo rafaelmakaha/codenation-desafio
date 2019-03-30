@@ -28,6 +28,7 @@ class App extends Component {
         <div className="container mt-10">
           <div className="row">
           {recipes.map((item,key) => {
+            // let reg = new RegExp('/('+searchString+'+)/gi');
             if(!searchString.length){
               return(
                 <RecipeItem 
@@ -40,21 +41,22 @@ class App extends Component {
             }else if(item.title.includes(searchString) || item.ingredients.includes(searchString)){
 
               let partsTitle = item.title;
-              partsTitle = partsTitle.replace(new RegExp(searchString,'g'), '!' + searchString + '!');
-              partsTitle = partsTitle.split('!');
+              let partsIngredients = item.ingredients;
 
+              let reg = new RegExp('(' + searchString + '+)', 'gi');
+
+              partsTitle = partsTitle.split(reg);
+              partsIngredients = partsIngredients.split(reg);
+              
               for(var i=0; i < partsTitle.length; i+=1){
-                if(partsTitle[i].includes(searchString)){
+                console.log(partsTitle);
+                if(partsTitle[i].match(reg)){
                   partsTitle[i] = <mark>{partsTitle[i]}</mark>
                 }
               }
 
-              let partsIngredients = item.ingredients;
-              partsIngredients = partsIngredients.replace(new RegExp(searchString,'g'), '!' + searchString + '!');
-              partsIngredients = partsIngredients.split('!');
-
               for(i=0; i < partsIngredients.length; i+=1){
-                if(partsIngredients[i].includes(searchString)){
+                if(partsIngredients[i].match(reg)){
                   partsIngredients[i] = <mark>{partsIngredients[i]}</mark>
                 }
               }
